@@ -1,0 +1,12 @@
+#map {
+    height: 800px;
+}
+
+#detect_alert {
+    display: none;
+}
+
+.nav-tabs > li > a {
+    padding-right: 8px;
+    padding-left: 8px;
+}
