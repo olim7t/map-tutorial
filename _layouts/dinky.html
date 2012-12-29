@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Map tutorial</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <script src="javascripts/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Map tutorial</h1>
+        <p class="header">How to add interactive maps to your website.</p>
+        <ul>
+          <!-- http://stackoverflow.com/questions/9053066/sorted-navigation-menu-with-jekyll-and-liquid -->
+          {% for order in (1..20) %}
+            {% for p in site.pages %}
+              {% if p.order == order %}
+              <li><a class="buttons" href="{{ p.url }}">{{ p.menu_title }}</a></li>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </header>
+      <section>
+        {{ content }}
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com/">GitHub Pages</a> using the <a href="https://github.com/broccolini/dinky">Dinky theme</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
