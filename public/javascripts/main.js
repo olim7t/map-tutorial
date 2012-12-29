@@ -71,6 +71,9 @@ $(document).ready(function () {
             clear_highlights_button.removeAttr('disabled');
         } else my_location_marker.setLatLng(latlng);
 
+        // Recenter if new location is outside of the current view
+        if (!map.getBounds().contains(latlng)) map.setView(latlng, map.getZoom());
+
         display_coordinates();
     };
 
@@ -81,11 +84,13 @@ $(document).ready(function () {
         };
 
         return function () {
-            /*
-             * TODO feature 4: autodetection.
-             *
-             * Perform HTML5 geolocation here.
-             */
+            if (Modernizr.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    set_my_location(position.coords);
+                }, function (err) {
+                    show_error(err.code + ': ' + err.message);
+                });
+            } else show_error('Not supported on your browser');
         };
     })();
 
