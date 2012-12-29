@@ -54,16 +54,11 @@ db.open(function (err, db) {
             collection.insert(highlights, function (err, result) {
                 assert.ok(!err, err && err.message);
                 /*
-                 * TODO: Create geospatial index.
+                 * TODO feature 3: highlights search
                  *
-                 * Index options: http://docs.mongodb.org/manual/core/geospatial-indexes/
-                 * Javascript API: http://mongodb.github.com/node-mongodb-native/api-generated/collection.html#ensureindex
+                 * Create the geospatial index here.
                  */
-                collection.ensureIndex({loc: '2d'}, {}, function (err, indexName) {
-                    assert.ok(!err, err && err.message);
-                    console.log('created geospatial index');
-                    notify_db_ready();
-                });
+                notify_db_ready();
             });
         });
     };

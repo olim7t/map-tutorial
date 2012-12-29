@@ -15,26 +15,32 @@ $(document).ready(function () {
 
     var map, my_location_marker, highlight_markers = [];
 
-    /*
-     * TODO create map on the HTML element with id 'map'.
-     * http://leafletjs.com/examples/quick-start.html
-     *
-     * To get a nice view of Paris, use coordinates [48.856583, 2.347641] with a zoom level of 13.
-     *
-     * Try OpenStreetMaps and MapQuest tiles, keep the ones you prefer.
-     */
     var init_map = function () {
-        var result = L.map('map').setView([48.856583, 2.347641], 13);
+        var open_street_map_config = {
+            tilesUrl: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            subDomains: ['a', 'b', 'c'],
+            attribution: 'Data, imagery and map information provided by ' +
+                '<a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>'
+        };
+        var map_quest_config = {
+            tilesUrl: 'http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+            subDomains: ['otile1', 'otile2', 'otile3', 'otile4'],
+            attribution: 'Data, imagery and map information provided by ' +
+                '<a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>, ' +
+                '<a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>'
+        };
 
-        var tilesUrl = 'http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-            subDomains = ['otile1', 'otile2', 'otile3', 'otile4'],
-            attribution = 'Data, imagery and map information provided by <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>, <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>';
-
-        L.tileLayer(tilesUrl, {
-            maxZoom: 18, attribution: attribution, subdomains: subDomains
-        }).addTo(result);
-
-        return result;
+        /*
+         * TODO feature 1: map display.
+         *
+         * Delete the code below and replace with Leaflet initialization code.
+         */
+        return {
+            on: function (event, callback) {
+            }
+        };
     };
 
     // Generic function to coerce various incoming formats to Leaflet's LatLng type
@@ -50,29 +56,18 @@ $(document).ready(function () {
             return new L.LatLng(arg0, arguments[1]);
     };
 
+    // Updates the yellow section under 'My location'
     var display_coordinates = function () {
         var latlng = my_location_marker.getLatLng();
         coordinates.html(latlng.lat + ", " + latlng.lng);
     };
 
-    /*
-     * TODO update marker on map and display coordinates.
-     */
     var set_my_location = function () {
-        var latlng = to_latlng.apply(this, arguments);
-        if (typeof my_location_marker === 'undefined') {
-            my_location_marker = L.marker(latlng).addTo(map);
-            my_location_marker.dragging.enable();
-            my_location_marker.on('drag', display_coordinates);
-
-            search_highlights_button.removeAttr('disabled');
-            clear_highlights_button.removeAttr('disabled');
-        } else {
-            my_location_marker.setLatLng(latlng);
-        }
-        // Recenter if new location is outside of the current view
-        if (!map.getBounds().contains(latlng)) map.setView(latlng, map.getZoom());
-        display_coordinates();
+        /*
+         * TODO feature 2: manual selection
+         *
+         * React to a click on the map here.
+         */
     };
 
     var detect = (function () {
@@ -81,23 +76,12 @@ $(document).ready(function () {
             detect_alert.show();
         };
 
-        /*
-         * TODO perform geolocation (use Modernizr to check if available)
-         * http://diveintohtml5.info/geolocation.html
-         *
-         * Update location if it succeeds, show error otherwise.
-         *
-         * Optional: handle case where location is outside of displayed map (in set_my_location).
-         * see Map.getBounds().contains(), Map.setView in Leaflet doc
-         */
         return function () {
-            if (Modernizr.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    set_my_location(position.coords);
-                }, function (err) {
-                    show_error(err.code + ': ' + err.message);
-                });
-            } else show_error('Not supported on your browser');
+            /*
+             * TODO feature 4: autodetection.
+             *
+             * Perform HTML5 geolocation here.
+             */
         };
     })();
 
@@ -106,52 +90,16 @@ $(document).ready(function () {
     };
     clear_locations_button.click(clear_locations);
 
-    /*
-     * TODO send an AJAX query to Nominatim
-     * http://wiki.openstreetmap.org/wiki/Nominatim
-     *
-     * Display the results in the search_results list
-     */
     var search = (function () {
-        var on_result_click = function (event) {
-            var target = $(event.target)
-                , latitude = target.data('latitude')
-                , longitude = target.data('longitude');
-            set_my_location(latitude, longitude);
-            return false;
-        };
-
-        var display_one_result = function (place) {
-            var box = place.boundingbox
-                , latitude = (parseFloat(box[0]) + parseFloat(box[1])) / 2
-                , longitude = (parseFloat(box[2]) + parseFloat(box[3])) / 2;
-            locations.append(
-                $('<li></li>').append(
-                    $('<a href="#"></a>')
-                        .html(place.display_name)
-                        .data('latitude', latitude)
-                        .data('longitude', longitude)
-                        .click(on_result_click)
-                )
-            );
-        };
-
-        var display_all_results = function (json) {
-            clear_locations();
-            json.forEach(display_one_result);
-        };
 
         return function () {
             var q = locations_field.val().trim();
             if (q.length > 0) {
-                var url = 'http://nominatim.openstreetmap.org/search?q='
-                    + encodeURIComponent(q)
-                    + '&format=json';
-                $.ajax({
-                    url: url,
-                    dataType: 'jsonp',
-                    jsonp: 'json_callback'
-                }).done(display_all_results);
+                /*
+                 * TODO feature 5: address search
+                 *
+                 * Query Nominatim and display the results here.
+                 */
             }
             return false;
         };
@@ -175,31 +123,12 @@ $(document).ready(function () {
             shadowSize: [41, 41]
         });
 
-        var display_one_highlight = function (highlight) {
-            var distance = Math.ceil(highlight.dis)
-                , name = highlight.obj.name
-                , latlng = to_latlng(highlight.obj.loc);
-
-            var marker = L.marker(latlng, {icon: highlight_icon}).addTo(map);
-            marker.dragging.disable();
-            marker.bindPopup('<b>' + name + '</b> (' + distance + ' meters)');
-
-            if (highlight_markers.length == 0) marker.openPopup();
-
-            highlight_markers.push(marker);
-        };
-
-        var display_all_highlights = function (json) {
-            clear_highlights();
-            json.forEach(display_one_highlight);
-        };
-
         return function () {
-            var radius = radius_input.val()
-                , latitude = my_location_marker.getLatLng().lat
-                , longitude = my_location_marker.getLatLng().lng
-                , url = '/highlights/' + longitude + ';' + latitude + ';' + radius;
-            $.ajax({ url: url }).done(display_all_highlights);
+            /*
+             * TODO feature 3: highlights search.
+             *
+             * Query the backend and display the results here.
+             */
         };
     })();
 
