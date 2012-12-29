@@ -66,6 +66,9 @@ $(document).ready(function () {
             my_location_marker = L.marker(latlng).addTo(map);
             my_location_marker.dragging.enable();
             my_location_marker.on('drag', display_coordinates);
+
+            search_highlights_button.removeAttr('disabled');
+            clear_highlights_button.removeAttr('disabled');
         } else my_location_marker.setLatLng(latlng);
 
         display_coordinates();
@@ -124,12 +127,31 @@ $(document).ready(function () {
             shadowSize: [41, 41]
         });
 
+        var display_one_highlight = function (highlight) {
+            var distance = Math.ceil(highlight.dis)
+                , name = highlight.obj.name
+                , latlng = to_latlng(highlight.obj.loc);
+
+            var marker = L.marker(latlng, {icon: highlight_icon}).addTo(map);
+            marker.dragging.disable();
+            marker.bindPopup('<b>' + name + '</b> (' + distance + ' meters)');
+
+            if (highlight_markers.length == 0) marker.openPopup();
+
+            highlight_markers.push(marker);
+        };
+
+        var display_all_highlights = function (json) {
+            clear_highlights();
+            json.forEach(display_one_highlight);
+        };
+
         return function () {
-            /*
-             * TODO feature 3: highlights search.
-             *
-             * Query the backend and display the results here.
-             */
+            var radius = radius_input.val()
+                , latitude = my_location_marker.getLatLng().lat
+                , longitude = my_location_marker.getLatLng().lng
+                , url = '/highlights/' + longitude + ';' + latitude + ';' + radius;
+            $.ajax({ url: url }).done(display_all_highlights);
         };
     })();
 

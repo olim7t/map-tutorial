@@ -53,12 +53,11 @@ db.open(function (err, db) {
             assert.ok(!err, err && err.message);
             collection.insert(highlights, function (err, result) {
                 assert.ok(!err, err && err.message);
-                /*
-                 * TODO feature 3: highlights search
-                 *
-                 * Create the geospatial index here.
-                 */
-                notify_db_ready();
+                collection.ensureIndex({loc: '2d'}, {}, function (err, indexName) {
+                    assert.ok(!err, err && err.message);
+                    console.log('created geospatial index ' + indexName);
+                    notify_db_ready();
+                });
             });
         });
     };

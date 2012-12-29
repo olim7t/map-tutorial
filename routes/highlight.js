@@ -1,12 +1,7 @@
 var db_ref = require('./db');
 
-/*
- * TODO feature 3: highlights search.
- *
- * Initialize distanceMultiplier to the correct value.
- */
 var earthRadiusInMeters = 6378137,
-    distanceMultiplier = 0;
+    distanceMultiplier = earthRadiusInMeters * Math.PI / 180;
 
 // GET /highlights/:longitude;:latitude;:radius
 exports.search = function (req, res) {
@@ -15,10 +10,13 @@ exports.search = function (req, res) {
         , radius = parseInt(req.params.radius);
 
     db_ref.get(function (db) {
-        /*
-         * TODO feature 3: highlights search.
-         * Implement the MongoDB query here.
-         */
-        res.send('TODO');
+        db.command({
+            geoNear: 'highlights',
+            near: [longitude, latitude],
+            maxDistance: radius / distanceMultiplier,
+            distanceMultiplier: distanceMultiplier
+        }, function (err, result) {
+            res.send(err || result.results);
+        });
     });
 };
