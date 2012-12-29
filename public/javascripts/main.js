@@ -32,15 +32,13 @@ $(document).ready(function () {
                 '<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>'
         };
 
-        /*
-         * TODO feature 1: map display.
-         *
-         * Delete the code below and replace with Leaflet initialization code.
-         */
-        return {
-            on: function (event, callback) {
-            }
-        };
+        with (map_quest_config) {
+            var result = L.map('map').setView([48.856583, 2.347641], 13);
+            L.tileLayer(tilesUrl, {
+                maxZoom: 18, attribution: attribution, subdomains: subDomains
+            }).addTo(result);
+            return result;
+        }
     };
 
     // Generic function to coerce various incoming formats to Leaflet's LatLng type
