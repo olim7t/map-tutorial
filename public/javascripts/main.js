@@ -100,15 +100,45 @@ $(document).ready(function () {
     clear_locations_button.click(clear_locations);
 
     var search = (function () {
+        var on_result_click = function (event) {
+            var target = $(event.target)
+                , latitude = target.data('latitude')
+                , longitude = target.data('longitude');
+            set_my_location(latitude, longitude);
+            return false;
+        };
+
+        var display_one_result = function (place) {
+            var box = place.boundingbox
+                , latitude = (parseFloat(box[0]) + parseFloat(box[1])) / 2
+                , longitude = (parseFloat(box[2]) + parseFloat(box[3])) / 2;
+            locations.append(
+                $('<li></li>').append(
+                    $('<a href="#"></a>')
+                        .html(place.display_name)
+                        .data('latitude', latitude)
+                        .data('longitude', longitude)
+                        .click(on_result_click)
+                )
+            );
+        };
+
+        var display_all_results = function (json) {
+            clear_locations();
+            json.forEach(display_one_result);
+        };
 
         return function () {
             var q = locations_field.val().trim();
             if (q.length > 0) {
-                /*
-                 * TODO feature 5: address search
-                 *
-                 * Query Nominatim and display the results here.
-                 */
+                var url = 'http://nominatim.openstreetmap.org/search?q='
+                    + encodeURIComponent(q)
+                    + '&format=json';
+                $.ajax({
+                    url: url,
+                    dataType: 'jsonp',
+                    jsonp: 'json_callback'
+                }).done(display_all_results);
             }
             return false;
         };
