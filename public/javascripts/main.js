@@ -61,11 +61,14 @@ $(document).ready(function () {
     };
 
     var set_my_location = function () {
-        /*
-         * TODO feature 2: manual selection
-         *
-         * React to a click on the map here.
-         */
+        var latlng = to_latlng.apply(this, arguments);
+        if (typeof my_location_marker === 'undefined') {
+            my_location_marker = L.marker(latlng).addTo(map);
+            my_location_marker.dragging.enable();
+            my_location_marker.on('drag', display_coordinates);
+        } else my_location_marker.setLatLng(latlng);
+
+        display_coordinates();
     };
 
     var detect = (function () {
