@@ -417,3 +417,9 @@ footer {
     color:#444;
   }
 }
+
+/* 'More help' extension */
+div.more_help {
+    padding-left: 25px;
+    display: none;
+}
