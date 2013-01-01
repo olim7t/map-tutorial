@@ -11,30 +11,27 @@ the main page.
 
 ## Map viewer
 
-We've chosen [Leaflet](http://leafletjs.com/), developed by [CloudMade](http://cloudmade.com/).
+We've chosen [Leaflet][ll], developed by [CloudMade][cm].
 
 ## Map tiles
 
 Leaflet needs a backend to retrieve the map tiles from. CloudMade provide their own tiles
-API; their free plan allows up to
-[250,000 tiles per month](http://support.cloudmade.com/forums/web-maps-studio/posts/4135/show).
+API; their free plan allows up to [250,000 tiles per month][cm_limit].
 
 You can also retrieve tiles from other APIs. We'll try two alternatives:
 
 * OpenStreetMap. Note that for a real app you should not use their servers directly
-  (see [tiles usage policy](http://wiki.openstreetmap.org/wiki/Tile_usage_policy));
+  (see [tiles usage policy][osm_policy]);
 * MapQuest. Their free plan has no preset limits but they reserve the right to block abusers
-  (for heavy use, consider a
-  [paid plan](http://devblog.mapquest.com/2011/11/17/no-preset-limit-on-free-map-api-transactions/)).
+  (for heavy use, consider a [paid plan][mq_plans]).
 
 ## Code!
 
 Open `main.js`; it defines a JQuery callback that is launched at page load. Locate the
-`init_map` function. You can see that the configuration for OpenStreetMap and MapQuest are
+`init_map` function. You can see that the configuration for OpenStreetMap and MapQuest is
 already provided.
 
-Initialize the map as explained in the
-[Leaflet quick start tutorial](http://leafletjs.com/examples/quick-start.html)
+Initialize the map as explained in the [Leaflet quick start tutorial][ll_tuto]
 (scroll down to "Setting up the map", the preparation steps have already been taken care of).
 
 In our example we'll be exploring Paris; to get a nice initial view, use
@@ -45,6 +42,14 @@ variable that will be used later.
 
 Try the different tiles providers and keep the one you prefer.
 
-## [View solution](https://github.com/olim7t/map-tutorial/commit/5f3daa0225103831e80895fe502b454cdb4d7763)
+## [View solution][solution]
 
 Next: [Feature 2: Manual selection](manual.html)
+
+[ll]: http://leafletjs.com/
+[cm]: http://cloudmade.com/
+[cm_limit]: http://support.cloudmade.com/forums/web-maps-studio/posts/4135/show
+[osm_policy]: http://wiki.openstreetmap.org/wiki/Tile_usage_policy
+[mq_plans]: http://devblog.mapquest.com/2011/11/17/no-preset-limit-on-free-map-api-transactions/
+[ll_tuto]: http://leafletjs.com/examples/quick-start.html
+[solution]: https://github.com/olim7t/map-tutorial/commit/5f3daa0225103831e80895fe502b454cdb4d7763

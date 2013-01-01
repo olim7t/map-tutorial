@@ -6,9 +6,8 @@ order: 2
 
 # Setting up your environment
 
-Install [node.js](http://nodejs.org/) and [MongoDB](http://www.mongodb.org/) (use your
-favorite package manager or follow the instructions on their site).
-The application was tested with versions 0.8.16 and 2.2.2.
+Install [node.js][node] and [MongoDB][mongo] (use your favorite package manager or follow the
+instructions on their site). The example code was tested with versions 0.8.16 and 2.2.2.
 
 Clone the project:
 
@@ -35,3 +34,6 @@ Start MongoDB, and try a few commands to make sure everything works:
     show collections
 
 Next: [Feature 1: Map display](display.html)
+
+[node]: http://nodejs.org/
+[mongo]: http://www.mongodb.org/

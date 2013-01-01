@@ -6,15 +6,14 @@ order: 12
 
 # Feature 2: Manual selection
 
-Our app lets the user provide their position in different ways. The first one is to click on
-the map, which will display a marker and update the coordinates display (the yellow section
-under "My location". If the user clicks a second time, we'll move the existing marker.
+Our app lets users provide their position in different ways. The first one is to click on
+the map, which will display a blue marker and update the coordinates display (the yellow
+section under "My location"). Clicking a second time moves the existing marker.
 
 ## Code!
 
 The map's click event is bound to the `set_my_location` function. The
-[Leaflet quick start tutorial](http://leafletjs.com/examples/quick-start.html)
-has a section on markers to get you started.
+[Leaflet quick start tutorial][ll_tuto] has a section on markers to get you started.
 
 Use the top-level `my_location_marker` variable to keep track of the marker once it has been
 created. Two helper functions are provided:
@@ -35,18 +34,21 @@ To pass the variable-argument list from one function to the other, use:
     var latlng = to_latlng.apply(this, arguments);
 </div>
 
-## Extra points
+## For extra credits
 
 Make the marker draggable and update the position in real-time when it moves.
 
 <a href="#" class="more_help" id="more_help_2">More help</a>
 <div markdown="1" class="more_help" id="more_help_2_contents">
-Look into the [marker API](http://leafletjs.com/reference.html#marker). Bind a callback
-to the `drag` event of the marker (using the same syntax as when we bind `set_my_location`
-to the map).
+Look into the [marker API][ll_marker]. Bind a callback to the `drag` event of the marker (using the
+same syntax as when we bind `set_my_location` to the map).
 </div>
 
 
-## [View solution](https://github.com/olim7t/map-tutorial/commit/8b75923fbb0717c828c55501209a0c12bee4ca93)
+## [View solution][solution]
 
 Next: [Feature 3: Highlights search](highlights.html)
+
+[ll_tuto]: http://leafletjs.com/examples/quick-start.html
+[ll_marker]: http://leafletjs.com/reference.html#marker
+[solution]: https://github.com/olim7t/map-tutorial/commit/8b75923fbb0717c828c55501209a0c12bee4ca93

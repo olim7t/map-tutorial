@@ -422,4 +422,9 @@ footer {
 div.more_help {
     padding-left: 25px;
     display: none;
+    border-left: 5px solid #EBEAE7;
+}
+
+code {
+    background: #FDFEFB;
 }
