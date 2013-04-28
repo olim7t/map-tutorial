@@ -7,7 +7,7 @@ order: 2
 # Setting up your environment
 
 Install [node.js][node] and [MongoDB][mongo] (use your favorite package manager or follow the
-instructions on their site). The example code was tested with versions 0.8.16 and 2.2.2.
+instructions on their site). The code was tested with node 0.8.16, and MongoDB 2.2.2 and 2.4.3.
 
 Clone the project:
 

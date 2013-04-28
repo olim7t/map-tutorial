@@ -7,9 +7,9 @@ order: 1
 # Welcome!
 
 Want to become the new Google Maps? This short tutorial will guide you through a few options
-to add interactive maps to your website, using alternative solutions.
+to add interactive maps to your website, using "libre" alternatives.
 
-Through the development of a full-stack Javascript app, you'll learn to:
+You'll work on a full-stack JS app and learn to:
 
 * display maps with [Leaflet][ll], using tiles from [OpenStreetMap][osm] or [MapQuest][mq];
 * show and move markers on your maps;

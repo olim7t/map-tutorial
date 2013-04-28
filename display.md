@@ -11,7 +11,7 @@ the main page.
 
 ## Map viewer
 
-We've chosen [Leaflet][ll], developed by [CloudMade][cm].
+We'll use [Leaflet][ll], developed by [CloudMade][cm].
 
 ## Map tiles
 
