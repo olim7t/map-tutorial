@@ -78,11 +78,11 @@ The unit test should now pass.
 <div markdown="1" class="more_help" id="more_help_query_contents">
 The `db.collection.find` form won't work, because it doesn't return the distance. Use:
 
-    db.runCommand({
+    db.command({
         geoNear: "highlights",
         near: [ x, y ],
         maxDistance: z,
-        distanceModifier: d
+        distanceMultiplier: d
     })
 
 MongoDB does not apply the distance modifier to `maxDistance`, so convert the radius before
