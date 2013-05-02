@@ -86,7 +86,7 @@ The `db.collection.find` form won't work, because it doesn't return the distance
     })
 
 MongoDB does not apply the distance modifier to `maxDistance`, so convert the radius before
-passing it in (`radius / distanceModifier`).
+passing it in (`radius / distanceMultiplier`).
 
 To build the response, simply extract the `results` subarray.
 </div>
